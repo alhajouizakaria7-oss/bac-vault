@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BacVault | Espace Privé d'Élite</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>Bac<span>Vault</span></h2>
+      <span class="badge">VIP Elite</span>
+    </div>
+    
+    <nav class="nav-links">
+      <button class="nav-btn active" data-tab="vault">📚 Documents & Astuces</button>
+      <button class="nav-btn" data-tab="videos">🎥 Masterclass Vidéos</button>
+      <button class="nav-btn" data-tab="hardcore">⚡ Hardcore Nationaux</button>
+      <button class="nav-btn" data-tab="ai-solver">🤖 Assistant Résolution</button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>Cercle Privé 2026</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Tab 1: Documents & Astuces -->
+    <section id="vault" class="tab-content active">
+      <header class="section-header">
+        <h1>Documents Rares & Fiches Stratégiques</h1>
+        <p>Résumés denses, fiches d'astuces et démonstrations exclusives.</p>
+      </header>
+
+      <div class="cards-grid">
+        <div class="card">
+          <span class="tag tag-math">Maths</span>
+          <h3>Fiche : Continuité & TVI (Théorème des Valeurs Intermédiaires)</h3>
+          <p>Toutes les variantes de questions vicieuses du National avec méthodes de justification rigoureuses.</p>
+          <a href="#" class="card-btn">Consulter la fiche</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-phys">Physique</span>
+          <h3>Ondes & Décroissance Radioactive : Formules Express</h3>
+          <p>Tableau récapitulatif des pièges d'unités ($t_{1/2}$, constante de temps $\tau$, diffraction).</p>
+          <a href="#" class="card-btn">Consulter la fiche</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-chem">Chimie</span>
+          <h3>Suivi Temporel & Conductimétrie : Astuces Graphiques</h3>
+          <p>Méthodes d'exploitation des tangentes, temps de demi-réaction et vitesses volumiques.</p>
+          <a href="#" class="card-btn">Consulter la fiche</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Masterclass Vidéos -->
+    <section id="videos" class="tab-content">
+      <header class="section-header">
+        <h1>Masterclass YouTube Ciblées</h1>
+        <p>Sélection sans distraction des explications les plus limpides du web.</p>
+      </header>
+      
+      <div class="cards-grid">
+        <div class="card">
+          <span class="tag tag-math">Maths</span>
+          <h3>Les Branches Infinies en 15 Minutes Chrono</h3>
+          <p>Guide visuel pour ne plus jamais hésiter sur les asymptotes et branches paraboliques.</p>
+          <a href="https://www.youtube.com" target="_blank" class="card-btn">Regarder la vidéo</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-phys">Physique</span>
+          <h3>Circuit RC / RL : Maîtriser l'Équation Différentielle</h3>
+          <p>Démonstration pas à pas de la solution analytique et des conditions initiales.</p>
+          <a href="https://www.youtube.com" target="_blank" class="card-btn">Regarder la vidéo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Hardcore Nationaux -->
+    <section id="hardcore" class="tab-content">
+      <header class="section-header">
+        <h1>Hardcore Exam Bank</h1>
+        <p>Exercices à fort coefficient de difficulté tirés des sessions normales et de rattrapage.</p>
+      </header>
+
+      <div class="cards-grid">
+        <div class="card">
+          <span class="tag tag-danger">Niveau Élite</span>
+          <h3>National 2021 (Rattrapage) : Problème d'Analyse</h3>
+          <p>Étude de fonction avec paramètre, suite récurrente et calcul d'intégrale délicat.</p>
+          <a href="#" class="card-btn">Télécharger le problème</a>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-danger">Niveau Élite</span>
+          <h3>Physique-Chimie 2023 : Suivi Spectrophotométrique</h3>
+          <p>Exercice combinant cinétique et réactions acide-base avec calcul d'avancement complexe.</p>
+          <a href="#" class="card-btn">Télécharger le problème</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Assistant Résolution (Chat & Solver) -->
+    <section id="ai-solver" class="tab-content">
+      <header class="section-header">
+        <h1>Assistant d'Entraide & Résolution</h1>
+        <p>Bloqué sur un exercice ? Pose ton énoncé pour obtenir la méthode guidée.</p>
+      </header>
+
+      <div class="solver-box">
+        <div class="chat-history" id="chat-history">
+          <div class="chat-msg ai-msg">
+            <strong>Assistant Vault :</strong> Salam ! Colle ici la question ou l'exercice qui te pose problème, et précise la matière.
+          </div>
+        </div>
+
+        <form id="solver-form" class="solver-input-bar">
+          <select id="subject-select" class="subject-dropdown">
+            <option value="Maths">Maths</option>
+            <option value="Physique">Physique</option>
+            <option value="Chimie">Chimie</option>
+          </select>
+          <input type="text" id="user-question" placeholder="Ex: Comment montrer que la fonction f admet une bijection..." required>
+          <button type="submit">Envoyer</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

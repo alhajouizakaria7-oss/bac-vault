@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #0b0f19;
+  color: #f1f5f9;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background-color: #111827;
+  border-right: 1px solid #1f2937;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.logo h2 {
+  font-size: 1.3rem;
+}
+
+.logo h2 span {
+  color: #38bdf8;
+}
+
+.badge {
+  background-color: #f59e0b;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  padding: 12px 14px;
+  text-align: left;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background-color: #1f2937;
+  color: #38bdf8;
+}
+
+.sidebar-footer {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+}
+
+.section-header {
+  margin-bottom: 28px;
+}
+
+.section-header h1 {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.section-header p {
+  color: #94a3b8;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #38bdf8;
+}
+
+.tag {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.tag-math { background-color: #0284c7; color: #fff; }
+.tag-phys { background-color: #7c3aed; color: #fff; }
+.tag-chem { background-color: #059669; color: #fff; }
+.tag-danger { background-color: #dc2626; color: #fff; }
+
+.card h3 {
+  font-size: 1.05rem;
+}
+
+.card p {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.card-btn {
+  display: inline-block;
+  text-align: center;
+  background-color: #1f2937;
+  color: #38bdf8;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.card-btn:hover {
+  background-color: #38bdf8;
+  color: #0b0f19;
+}
+
+/* AI Solver Box */
+.solver-box {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+}
+
+.chat-history {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chat-msg {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.ai-msg {
+  background-color: #1f2937;
+  align-self: flex-start;
+  border-left: 3px solid #38bdf8;
+}
+
+.user-msg {
+  background-color: #0284c7;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.solver-input-bar {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #1f2937;
+  background-color: #0e1422;
+}
+
+.subject-dropdown {
+  background-color: #1f2937;
+  color: #fff;
+  border: 1px solid #374151;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+}
+
+.solver-input-bar input {
+  flex: 1;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #fff;
+  outline: none;
+}
+
+.solver-input-bar button {
+  background-color: #38bdf8;
+  color: #0b0f19;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
