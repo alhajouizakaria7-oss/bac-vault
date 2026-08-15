@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BacVault | Plateforme Privée d'Excellence</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
   <style>
     :root {
       --bg-space: #07090e;
@@ -28,7 +31,7 @@
 
     body {
       background-color: var(--bg-space);
-      background-image: 
+      background-image:
         radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.12) 0px, transparent 50%);
       color: var(--text-main);
@@ -40,7 +43,6 @@
       display: none !important;
     }
 
-    /* Auth Modal */
     .auth-modal {
       position: fixed;
       inset: 0;
@@ -229,7 +231,6 @@
       color: var(--accent-rose);
     }
 
-    /* App Layout */
     .app-container {
       display: flex;
       width: 100%;
@@ -368,7 +369,6 @@
       color: #475569;
     }
 
-    /* Main Content */
     .main-viewport {
       flex: 1;
       padding: 36px 44px;
@@ -475,138 +475,10 @@
       color: #06080e;
     }
 
-    /* Solver */
-    .solver-container {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 20px;
-      height: 560px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .chat-viewport {
-      flex: 1;
-      padding: 24px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .bubble {
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-size: 0.92rem;
-      max-width: 80%;
-      line-height: 1.5;
-    }
-
-    .bubble-ai {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--panel-border);
-      border-left: 4px solid var(--accent-cyan);
-      align-self: flex-start;
-    }
-
-    .bubble-user {
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-      color: #06080e;
-      font-weight: 600;
-      align-self: flex-end;
-    }
-
-    .solver-bar {
-      display: flex;
-      gap: 10px;
-      padding: 18px 24px;
-      background: rgba(0, 0, 0, 0.5);
-      border-top: 1px solid var(--panel-border);
-    }
-
-    .solver-bar select, .solver-bar input {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--panel-border);
-      color: #fff;
-      border-radius: 10px;
-      padding: 10px 14px;
-      outline: none;
-    }
-
-    .solver-bar input {
-      flex: 1;
-    }
-
-    .solver-bar button {
-      background: var(--accent-cyan);
-      border: none;
-      color: #06080e;
-      font-weight: 700;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    /* Teacher Tables & Stats */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-
-    .stat-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 16px;
-      padding: 22px;
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent-emerald);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .table-container {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.88rem;
-    }
-
-    .data-table th {
-      background: rgba(0, 0, 0, 0.4);
-      padding: 14px 18px;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--panel-border);
-    }
-
-    .data-table td {
-      padding: 14px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
     .doc-modal {
       position: fixed;
       inset: 0;
-      background: rgba(6, 8, 14, 0.9);
+      background: rgba(6, 8, 14, 0.92);
       backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
@@ -617,21 +489,22 @@
 
     .doc-modal-card {
       background: #0f172a;
-      border: 1px solid var(--panel-border);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
       width: 100%;
-      max-width: 640px;
-      max-height: 80vh;
+      max-width: 680px;
+      max-height: 85vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.9);
     }
 
     .doc-modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 24px;
+      padding: 20px 26px;
       border-bottom: 1px solid var(--panel-border);
     }
 
@@ -639,21 +512,42 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       cursor: pointer;
     }
 
     .doc-modal-body {
-      padding: 24px;
+      padding: 28px;
       overflow-y: auto;
-      line-height: 1.6;
-      font-size: 0.95rem;
+      line-height: 1.8;
+      font-size: 1rem;
+      color: #e2e8f0;
+    }
+
+    .math-formula-box {
+      background: rgba(0, 0, 0, 0.45);
+      border-left: 4px solid var(--accent-cyan);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 12px 0;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-item {
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
     }
   </style>
 </head>
 <body>
-
-  <!-- 1. AUTH MODAL -->
   <div id="auth-modal" class="auth-modal">
     <div class="auth-box">
       <div class="auth-brand">
@@ -667,7 +561,6 @@
         <button type="button" class="role-tab" id="btn-role-teacher">Espace Enseignant</button>
       </div>
 
-      <!-- Élève Étape 1 -->
       <form id="student-step1-form" class="auth-view active">
         <div class="input-field">
           <label>Nom & Prénom</label>
@@ -684,11 +577,10 @@
         <button type="submit" class="btn-glow">Recevoir mon code d'accès PIN</button>
       </form>
 
-      <!-- Élève Étape 2 -->
       <form id="student-step2-form" class="auth-view">
         <div class="otp-notice">
           <p>Un code de vérification à 4 chiffres a été généré pour <strong id="display-target-email"></strong>.</p>
-          <div class="simulated-otp-banner" id="simulated-otp-banner">
+          <div class="simulated-otp-banner">
             <span>Code PIN : </span><strong id="simulated-pin-val">----</strong>
           </div>
         </div>
@@ -700,7 +592,6 @@
         <button type="button" class="btn-text" id="btn-back-step1">← Modifier mes informations</button>
       </form>
 
-      <!-- Enseignant -->
       <form id="teacher-form" class="auth-view">
         <div class="input-field">
           <label>Nom complet</label>
@@ -721,9 +612,7 @@
     </div>
   </div>
 
-  <!-- 2. APPLICATION PRINCIPALE -->
   <div id="app-container" class="app-container hidden">
-
     <aside class="sidebar">
       <div class="brand">
         <h2>Bac<span>Vault</span></h2>
@@ -733,7 +622,7 @@
       <div class="user-profile-summary">
         <div class="avatar" id="app-user-avatar">Z</div>
         <div class="info">
-          <h4 id="app-user-name">Utilisateur</h4>
+          <h4 id="app-user-name">Zakaria</h4>
           <p id="app-user-detail">Lycée...</p>
         </div>
       </div>
@@ -758,43 +647,42 @@
     </aside>
 
     <main class="main-viewport">
-
       <section id="tab-vault" class="tab-pane active">
         <div class="pane-header">
           <div>
             <h1>Fiches Stratégiques & Résumés d'Or</h1>
-            <p>Documents de synthèse et méthodes clés pour les examens nationaux.</p>
+            <p>Documents rédigés en notation mathématique et scientifique rigoureuse.</p>
           </div>
         </div>
 
         <div class="resources-grid" id="student-vault-grid">
           <div class="doc-card" data-subject="Maths">
             <div class="doc-badge badge-math">Maths</div>
-            <h3>Continuité & TVI Rigoureux</h3>
-            <p>Formulations d'examens sur les bijections et unicité de solutions.</p>
+            <h3>Continuité & Théorème des Valeurs Intermédiaires (TVI)</h3>
+            <p>Méthodes d'examen pour justifier l'existence et l'unicité de la solution de l'équation $f(x) = 0$.</p>
             <div class="doc-footer">
               <span class="author">Pr. Alami</span>
-              <button class="btn-open-doc" data-title="Continuité & TVI" data-content="<p><strong>1. Conditions obligatoires :</strong> Justifier que la fonction est continue et strictement monotone sur l'intervalle [a, b].<br><br><strong>2. Produit des images :</strong> Calculer f(a) et f(b) et démontrer que f(a) * f(b) < 0.<br><br><strong>3. Conclusion :</strong> Conclure qu'il existe un unique réel alpha dans ]a, b[ tel que f(alpha) = 0.</p>">Lire la fiche</button>
+              <button class="btn-open-doc" data-title="Continuité & TVI Rigoureux" data-type="tvi">Lire la fiche</button>
             </div>
           </div>
 
           <div class="doc-card" data-subject="Physique">
             <div class="doc-badge badge-phys">Physique</div>
-            <h3>Ondes & Décroissance Express</h3>
-            <p>Tableau récapitulatif des pièges d'unités et formules d'ondes.</p>
+            <h3>Ondes & Décroissance Radioactive : Formules d'Or</h3>
+            <p>Formules exactes de diffraction et loi de décroissance avec constantes radioactives.</p>
             <div class="doc-footer">
               <span class="author">Pr. Physique</span>
-              <button class="btn-open-doc" data-title="Ondes & Décroissance" data-content="<p><strong>Diffraction :</strong> theta = lambda / a (avec theta en radian, lambda et a en mètres).<br><br><strong>Constante radioactive :</strong> lambda = ln(2) / t_1/2.<br><br><strong>Loi de décroissance :</strong> N(t) = N0 * exp(-lambda * t).</p>">Lire la fiche</button>
+              <button class="btn-open-doc" data-title="Ondes & Décroissance Radioactive" data-type="ondes">Lire la fiche</button>
             </div>
           </div>
 
           <div class="doc-card" data-subject="Chimie">
             <div class="doc-badge badge-chem">Chimie</div>
-            <h3>Suivi Temporel & Tangentes</h3>
-            <p>Exploitation graphique des vitesses volumiques de réaction.</p>
+            <h3>Cinétique Chimique & Vitesse Volumique</h3>
+            <p>Exploitation rigoureuse de la dérivée graphique $\frac{dx}{dt}$ et du temps de demi-réaction $t_{1/2}$.</p>
             <div class="doc-footer">
               <span class="author">Pr. Chimie</span>
-              <button class="btn-open-doc" data-title="Cinétique Chimique" data-content="<p><strong>Méthode Tangente :</strong><br>1. Tracer la tangente à la courbe x(t) à l'instant t.<br>2. Calculer le coefficient directeur k = Delta(x) / Delta(t).<br>3. Appliquer la formule : v(t) = (1/V) * (dx/dt).</p>">Lire la fiche</button>
+              <button class="btn-open-doc" data-title="Cinétique Chimique & Suivi Temporel" data-type="cinetique">Lire la fiche</button>
             </div>
           </div>
         </div>
@@ -804,14 +692,14 @@
         <div class="pane-header">
           <div>
             <h1>Masterclasses Vidéos Ciblées</h1>
-            <p>Explications claires des notions les plus importantes.</p>
+            <p>Explications claires des notions clés.</p>
           </div>
         </div>
         <div class="resources-grid">
           <div class="doc-card">
             <div class="doc-badge badge-math">Maths</div>
             <h3>Branches Infinies en 15 Min</h3>
-            <p>Guide visuel complet pour maîtriser les asymptotes et branches paraboliques.</p>
+            <p>Guide complet sur les asymptotes et branches paraboliques.</p>
             <div class="doc-footer">
               <a href="https://www.youtube.com" target="_blank" class="btn-link">Lancer la vidéo</a>
             </div>
@@ -823,14 +711,14 @@
         <div class="pane-header">
           <div>
             <h1>Hardcore Exam Bank</h1>
-            <p>Exercices à fort niveau de difficulté tirés des sessions antérieures.</p>
+            <p>Exercices d'analyse et de physique de niveau avancé.</p>
           </div>
         </div>
         <div class="resources-grid">
           <div class="doc-card">
             <div class="doc-badge badge-math">National 2021</div>
-            <h3>Problème d'Analyse & Suites Récurrentes</h3>
-            <p>Étude approfondie de fonction avec paramètre et intégrales délicates.</p>
+            <h3>Problème d'Analyse Complète & Suites</h3>
+            <p>Étude approfondie de fonction avec paramètre.</p>
             <div class="doc-footer">
               <a href="#" class="btn-link">Consulter le Sujet</a>
             </div>
@@ -845,25 +733,19 @@
             <p>Pose une question pour obtenir les étapes méthodologiques clés.</p>
           </div>
         </div>
-        <div class="solver-container">
-          <div class="chat-viewport" id="student-chat-history">
-            <div class="bubble bubble-ai">
-              <strong>Guide Vault :</strong> Salam ! Choisis la matière et colle ici ta question ou ton énoncé.
+        <div class="solver-container" style="background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:20px; height:500px; display:flex; flex-direction:column; overflow:hidden;">
+          <div class="chat-viewport" id="student-chat-history" style="flex:1; padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:14px;">
+            <div style="background:rgba(255,255,255,0.05); border-left:4px solid var(--accent-cyan); padding:12px 16px; border-radius:10px; font-size:0.9rem;">
+              <strong>Guide Vault :</strong> Salam ! Pose ton énoncé pour obtenir la méthode guidée.
             </div>
           </div>
-          <form id="student-solver-form" class="solver-bar">
-            <select id="chat-subject">
-              <option value="Maths">Maths</option>
-              <option value="Physique">Physique</option>
-              <option value="Chimie">Chimie</option>
-            </select>
-            <input type="text" id="chat-input" placeholder="Ex: Comment prouver qu'une suite récurrente converge ?" required>
-            <button type="submit">Envoyer</button>
+          <form id="student-solver-form" style="display:flex; gap:10px; padding:16px 20px; background:rgba(0,0,0,0.5); border-top:1px solid var(--panel-border);">
+            <input type="text" id="chat-input" placeholder="Ex: Comment prouver l'existence d'une racine unique..." required style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--panel-border); border-radius:8px; padding:10px 14px; color:#fff; outline:none;">
+            <button type="submit" style="background:var(--accent-cyan); border:none; color:#06080e; font-weight:700; padding:10px 20px; border-radius:8px; cursor:pointer;">Envoyer</button>
           </form>
         </div>
       </section>
 
-      <!-- Dashboard Enseignant -->
       <section id="tab-teacher-overview" class="tab-pane">
         <div class="pane-header">
           <div>
@@ -871,86 +753,373 @@
             <p>Vue d'ensemble de la plateforme et suivi des élèves.</p>
           </div>
         </div>
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-num" id="stat-students-count">0</div>
-            <div class="stat-label">Élèves Enregistrés</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="stat-docs-count">3</div>
-            <div class="stat-label">Fiches en ligne</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
+          <div style="background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:16px; padding:20px; text-align:center;">
+            <div style="font-size:2.2rem; font-weight:800; color:var(--accent-emerald);" id="stat-students-count">0</div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Élèves Enregistrés</div>
           </div>
         </div>
-      </section>
-
-      <section id="tab-teacher-publish" class="tab-pane">
-        <div class="pane-header">
-          <div>
-            <h1>Publier une Fiche</h1>
-            <p>Ajoutez une fiche qui sera accessible immédiatement à tous les élèves.</p>
-          </div>
-        </div>
-        <form id="teacher-publish-form" style="max-width: 600px; display: flex; flex-direction: column; gap: 14px;">
-          <div class="input-field">
-            <label>Matière</label>
-            <select id="pub-subject">
-              <option value="Maths">Mathématiques</option>
-              <option value="Physique">Physique</option>
-              <option value="Chimie">Chimie</option>
-            </select>
-          </div>
-          <div class="input-field">
-            <label>Titre de la fiche</label>
-            <input type="text" id="pub-title" placeholder="Ex: Fiche Nombres Complexes" required>
-          </div>
-          <div class="input-field">
-            <label>Description courte</label>
-            <textarea id="pub-desc" rows="2" placeholder="Description brève..." required></textarea>
-          </div>
-          <div class="input-field">
-            <label>Contenu de la fiche</label>
-            <textarea id="pub-content" rows="4" placeholder="Points clés..." required></textarea>
-          </div>
-          <button type="submit" class="btn-glow btn-glow-teacher">Publier la fiche</button>
-        </form>
       </section>
 
       <section id="tab-teacher-students" class="tab-pane">
         <div class="pane-header">
           <div>
             <h1>Élèves Enregistrés</h1>
-            <p>Liste des comptes élèves ayant validé l'accès.</p>
           </div>
         </div>
-        <div class="table-container">
-          <table class="data-table">
+        <div style="background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:16px; overflow:hidden;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
             <thead>
-              <tr>
-                <th>Nom & Prénom</th>
-                <th>Lycée</th>
-                <th>Email</th>
-                <th>Code PIN</th>
+              <tr style="background:rgba(0,0,0,0.4); border-bottom:1px solid var(--panel-border);">
+                <th style="padding:14px;">Nom</th>
+                <th style="padding:14px;">Lycée</th>
+                <th style="padding:14px;">Email</th>
+                <th style="padding:14px;">Code PIN</th>
               </tr>
             </thead>
             <tbody id="teacher-students-tbody"></tbody>
           </table>
         </div>
       </section>
-
     </main>
   </div>
 
-  <!-- MODAL DE LECTURE -->
   <div id="doc-modal" class="doc-modal hidden">
     <div class="doc-modal-card">
       <div class="doc-modal-header">
-        <h2 id="doc-modal-title">Fiche</h2>
+        <h2 id="doc-modal-title">Fiche Méthodologique</h2>
         <button id="doc-modal-close" class="btn-close">✕</button>
       </div>
       <div class="doc-modal-body" id="doc-modal-body"></div>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+    const authModal = document.getElementById('auth-modal');
+    const appContainer = document.getElementById('app-container');
+    const authAlert = document.getElementById('auth-alert');
+    const studentStep1Form = document.getElementById('student-step1-form');
+    const studentStep2Form = document.getElementById('student-step2-form');
+    const teacherForm = document.getElementById('teacher-form');
+    const roleTabs = document.querySelectorAll('.role-tab');
+    const authViews = document.querySelectorAll('.auth-view');
+    const studentNav = document.getElementById('student-nav');
+    const teacherNav = document.getElementById('teacher-nav');
+    const tabs = document.querySelectorAll('.nav-item');
+    const panes = document.querySelectorAll('.tab-pane');
+    const studentChatHistory = document.getElementById('student-chat-history');
+    const studentSolverForm = document.getElementById('student-solver-form');
+    const teacherStudentsTbody = document.getElementById('teacher-students-tbody');
+    const statStudentsCount = document.getElementById('stat-students-count');
+    const docModal = document.getElementById('doc-modal');
+    const docModalBody = document.getElementById('doc-modal-body');
+    const docModalTitle = document.getElementById('doc-modal-title');
+    const docModalClose = document.getElementById('doc-modal-close');
+
+    const appState = {
+      currentRole: 'student',
+      generatedPin: '',
+      registeredStudents: []
+    };
+
+    const docs = {
+      tvi: {
+        title: 'Continuité & TVI Rigoureux',
+        content: `
+          <div class="step-item">
+            <div class="step-title">1. Vérifier la continuité</div>
+            <p>On démontre d'abord que la fonction est continue sur l'intervalle considéré.</p>
+            <div class="math-formula-box">\(f\) continue sur \([a,b]\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">2. Calculer les images aux bornes</div>
+            <p>On évalue la fonction aux extrémités de l'intervalle.</p>
+            <div class="math-formula-box">\(f(a)\) et \(f(b)\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">3. Appliquer le théorème</div>
+            <p>Si \(f(a)\cdot f(b) \leq 0\), alors il existe au moins un réel \(c\in[a,b]\) tel que \(f(c)=0\).</p>
+            <div class="math-formula-box">\(\exists c \in [a,b],\; f(c)=0\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">4. Unicité</div>
+            <p>Pour l'unicité, il faut montrer que la fonction est strictement monotone ou injective sur l'intervalle.</p>
+            <div class="math-formula-box">\(f'\) de signe constant \(\Rightarrow\) unicité</div>
+          </div>
+        `
+      },
+      ondes: {
+        title: 'Ondes & Décroissance Radioactive',
+        content: `
+          <div class="step-item">
+            <div class="step-title">1. Loi de décroissance radioactive</div>
+            <p>La quantité d'un radioisotope diminue selon une loi exponentielle.</p>
+            <div class="math-formula-box">\(N(t)=N_0 e^{-\lambda t}\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">2. Période / demi-vie</div>
+            <p>La demi-vie est le temps nécessaire pour diviser la quantité par deux.</p>
+            <div class="math-formula-box">\(t_{1/2}=\frac{\ln 2}{\lambda}\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">3. Interférence / diffraction</div>
+            <p>Pour les franges d'interférence, on exploite la différence de marche.</p>
+            <div class="math-formula-box">\(\Delta = a\sin\theta\)</div>
+          </div>
+        `
+      },
+      cinetique: {
+        title: 'Cinétique Chimique & Suivi Temporel',
+        content: `
+          <div class="step-item">
+            <div class="step-title">1. Vitesse volumique</div>
+            <p>La vitesse de réaction est liée à la variation de concentration par unité de temps.</p>
+            <div class="math-formula-box">\(v = \frac{1}{V}\frac{dx}{dt}\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">2. Demi-réaction</div>
+            <p>Le temps de demi-réaction correspond au moment où la moitié du réactif a disparu.</p>
+            <div class="math-formula-box">\(t_{1/2} = \frac{\ln 2}{k}\)</div>
+          </div>
+          <div class="step-item">
+            <div class="step-title">3. Analyse du graphique</div>
+            <p>On lit la pente de la tangente pour obtenir la vitesse instantanée.</p>
+            <div class="math-formula-box">\(v = \left|\frac{d[A]}{dt}\right|\)</div>
+          </div>
+        `
+      }
+    };
+
+    function showAlert(message) {
+      authAlert.textContent = message;
+    }
+
+    function setActiveRole(role) {
+      appState.currentRole = role;
+      roleTabs.forEach(tab => tab.classList.toggle('active', tab.id === (role === 'student' ? 'btn-role-student' : 'btn-role-teacher')));
+      authViews.forEach(view => {
+        const active = role === 'student' ? view.id === 'student-step1-form' : view.id === 'teacher-form';
+        view.classList.toggle('active', active);
+      });
+      document.getElementById('btn-role-student').classList.toggle('active', role === 'student');
+      document.getElementById('btn-role-teacher').classList.toggle('active', role === 'teacher');
+    }
+
+    function generatePin() {
+      return String(Math.floor(1000 + Math.random() * 9000));
+    }
+
+    function renderTeacherStudents() {
+      teacherStudentsTbody.innerHTML = '';
+      appState.registeredStudents.forEach(student => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="padding:14px;">${student.name}</td>
+          <td style="padding:14px;">${student.school}</td>
+          <td style="padding:14px;">${student.email}</td>
+          <td style="padding:14px; font-family:'JetBrains Mono', monospace;">${student.pin}</td>
+        `;
+        teacherStudentsTbody.appendChild(tr);
+      });
+      statStudentsCount.textContent = appState.registeredStudents.length;
+    }
+
+    function openApp(role, userData) {
+      authModal.classList.add('hidden');
+      appContainer.classList.remove('hidden');
+      const isStudent = role === 'student';
+      studentNav.classList.toggle('hidden', !isStudent);
+      teacherNav.classList.toggle('hidden', isStudent);
+
+      const appUserBadge = document.getElementById('app-user-badge');
+      const appUserAvatar = document.getElementById('app-user-avatar');
+      const appUserName = document.getElementById('app-user-name');
+      const appUserDetail = document.getElementById('app-user-detail');
+
+      if (isStudent) {
+        appUserBadge.textContent = 'Élève';
+        appUserBadge.style.background = 'rgba(6, 182, 212, 0.15)';
+        appUserBadge.style.color = 'var(--accent-cyan)';
+        appUserAvatar.textContent = userData.name.charAt(0).toUpperCase();
+        appUserName.textContent = userData.name;
+        appUserDetail.textContent = userData.school;
+      } else {
+        appUserBadge.textContent = 'Prof';
+        appUserBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+        appUserBadge.style.color = 'var(--accent-emerald)';
+        appUserAvatar.textContent = userData.name.charAt(0).toUpperCase();
+        appUserName.textContent = userData.name;
+        appUserDetail.textContent = userData.email;
+      }
+    }
+
+    function setActivePane(targetId) {
+      panes.forEach(pane => pane.classList.toggle('active', pane.id === targetId));
+      tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === targetId));
+    }
+
+    function renderKaTeX() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.querySelector('.doc-modal-body'), {
+          delimiters: [
+            { left: '$', right: '$', display: false },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '\\(', right: '\\)', display: false }
+          ]
+        });
+      }
+    }
+
+    function openDoc(type) {
+      const doc = docs[type];
+      if (!doc) return;
+      docModalTitle.textContent = doc.title;
+      docModalBody.innerHTML = doc.content;
+      docModal.classList.remove('hidden');
+      renderKaTeX();
+    }
+
+    document.getElementById('btn-role-student').addEventListener('click', () => setActiveRole('student'));
+    document.getElementById('btn-role-teacher').addEventListener('click', () => setActiveRole('teacher'));
+
+    studentStep1Form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('stu-name').value.trim();
+      const school = document.getElementById('stu-school').value.trim();
+      const email = document.getElementById('stu-email').value.trim();
+
+      if (!name || !school || !email) {
+        showAlert('Veuillez remplir tous les champs.');
+        return;
+      }
+
+      appState.generatedPin = generatePin();
+      document.getElementById('display-target-email').textContent = email;
+      document.getElementById('simulated-pin-val').textContent = appState.generatedPin;
+      showAlert('');
+      studentStep1Form.classList.remove('active');
+      studentStep2Form.classList.add('active');
+    });
+
+    document.getElementById('btn-back-step1').addEventListener('click', () => {
+      studentStep2Form.classList.remove('active');
+      studentStep1Form.classList.add('active');
+      showAlert('');
+    });
+
+    studentStep2Form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = document.getElementById('otp-input').value.trim();
+      const email = document.getElementById('stu-email').value.trim();
+      const name = document.getElementById('stu-name').value.trim();
+      const school = document.getElementById('stu-school').value.trim();
+
+      if (input !== appState.generatedPin) {
+        showAlert('Code PIN incorrect. Vérifiez le code reçu.');
+        return;
+      }
+
+      const entry = { name, school, email, pin: appState.generatedPin };
+      const exists = appState.registeredStudents.some(student => student.email === email);
+      if (!exists) {
+        appState.registeredStudents.push(entry);
+      }
+      renderTeacherStudents();
+      openApp('student', { name, school, email });
+      setActivePane('tab-vault');
+      document.getElementById('otp-input').value = '';
+    });
+
+    teacherForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('tea-name').value.trim();
+      const email = document.getElementById('tea-email').value.trim();
+      const passkey = document.getElementById('tea-passkey').value.trim();
+
+      if (!name || !email || !passkey) {
+        showAlert('Veuillez remplir les champs enseignant.');
+        return;
+      }
+
+      if (passkey !== '2026') {
+        showAlert('Clé d’accès invalide.');
+        return;
+      }
+
+      showAlert('');
+      openApp('teacher', { name, email });
+      setActivePane('tab-teacher-overview');
+      renderTeacherStudents();
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      appContainer.classList.add('hidden');
+      authModal.classList.remove('hidden');
+      studentStep2Form.classList.remove('active');
+      studentStep1Form.classList.add('active');
+      showAlert('');
+      setActiveRole('student');
+      document.getElementById('stu-name').value = '';
+      document.getElementById('stu-school').value = '';
+      document.getElementById('stu-email').value = '';
+      document.getElementById('otp-input').value = '';
+      document.getElementById('tea-name').value = '';
+      document.getElementById('tea-email').value = '';
+      document.getElementById('tea-passkey').value = '';
+    });
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => setActivePane(tab.dataset.tab));
+    });
+
+    document.querySelectorAll('.btn-open-doc').forEach(button => {
+      button.addEventListener('click', () => openDoc(button.dataset.type));
+    });
+
+    docModalClose.addEventListener('click', () => docModal.classList.add('hidden'));
+    docModal.addEventListener('click', (event) => {
+      if (event.target === docModal) docModal.classList.add('hidden');
+    });
+
+    studentSolverForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = document.getElementById('chat-input');
+      const question = input.value.trim();
+      if (!question) return;
+
+      const userMessage = document.createElement('div');
+      userMessage.style.alignSelf = 'flex-end';
+      userMessage.style.background = 'rgba(6, 182, 212, 0.18)';
+      userMessage.style.border = '1px solid rgba(6, 182, 212, 0.3)';
+      userMessage.style.borderRadius = '10px';
+      userMessage.style.padding = '10px 14px';
+      userMessage.style.maxWidth = '80%';
+      userMessage.textContent = question;
+      studentChatHistory.appendChild(userMessage);
+
+      const botMessage = document.createElement('div');
+      botMessage.style.background = 'rgba(255,255,255,0.05)';
+      botMessage.style.borderLeft = '4px solid var(--accent-cyan)';
+      botMessage.style.padding = '12px 16px';
+      botMessage.style.borderRadius = '10px';
+      botMessage.style.fontSize = '0.9rem';
+      botMessage.innerHTML = `
+        <strong>Guide Vault :</strong><br>
+        1. Identifiez le théorème adapté.<br>
+        2. Vérifiez les hypothèses de l'énoncé.<br>
+        3. Écrivez chaque étape de manière logique et rigoureuse.<br>
+        4. Concluez avec la réponse claire et justifiée.
+      `;
+      studentChatHistory.appendChild(botMessage);
+      input.value = '';
+      studentChatHistory.scrollTop = studentChatHistory.scrollHeight;
+    });
+
+    setActiveRole('student');
+    setActivePane('tab-vault');
+    renderTeacherStudents();
+  </script>
 </body>
 </html>

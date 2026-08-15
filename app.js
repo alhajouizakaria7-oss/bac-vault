@@ -1,32 +1,76 @@
-// Clé Maître Enseignant
+// Clé Enseignant
 const TEACHER_MASTER_PIN = "7788";
 
-// Base de Données Locale (Persistance via LocalStorage)
+// Base locale
 let studentsDb = JSON.parse(localStorage.getItem('bacvault_students')) || [];
-let customDocsDb = JSON.parse(localStorage.getItem('bacvault_custom_docs')) || [];
-let solverQuestionsDb = JSON.parse(localStorage.getItem('bacvault_solver_questions')) || [
-  { subject: 'Maths', query: "Comment montrer que la suite récurrente u(n+1)=f(u(n)) converge vers le point fixe ?" }
-];
-
 let pendingStudent = null;
 
-// Éléments DOM Auth
+// Contenu Riche des Fiches avec Notation LaTeX Réelle
+const DOCS_CONTENT = {
+  tvi: `
+    <div class="step-item">
+      <div class="step-title">1. Énoncé du Théorème des Valeurs Intermédiaires (TVI) :</div>
+      <p>Soit $f$ une fonction continue et strictement monotone sur un intervalle $[a, b]$. Si la condition suivante est vérifiée :</p>
+      <div class="math-formula-box">$$f(a) \\times f(b) < 0$$</div>
+      <p>Alors l'équation $f(x) = 0$ admet une <strong>solution unique</strong> $\\alpha \\in ]a, b[$.</p>
+    </div>
+    
+    <div class="step-item">
+      <div class="step-title">2. Rédaction type exigée au barème du National :</div>
+      <p>• La fonction $f$ est <em>continue</em> sur $[a, b]$ (comme somme/produit de fonctions usuelles).</p>
+      <p>• La fonction $f$ est <em>strictement croissante (ou décroissante)</em> sur $[a, b]$.</p>
+      <p>• On a $f(a) \\cdot f(b) < 0$ (soit $0 \\in f([a, b]) = [f(a), f(b)]$).</p>
+      <p><strong>Conclusion :</strong> Il existe un unique réel $\\alpha \\in ]a, b[$ tel que $f(\\alpha) = 0$.</p>
+    </div>
+  `,
+  ondes: `
+    <div class="step-item">
+      <div class="step-title">1. Phénomène de Diffraction :</div>
+      <p>L'écart angulaire $\\theta$ lors du passage d'une onde lumineuse monochromatique à travers une fente de largeur $a$ est donné par :</p>
+      <div class="math-formula-box">$$\\theta = \\frac{\\lambda}{a} = \\frac{L}{2D}$$</div>
+      <p>Avec $\\theta$ en radians ($\\text{rad}$), la longueur d'onde $\\lambda$ et la largeur $a$ en mètres ($\\text{m}$), la largeur de la tache centrale $L$ et la distance écran $D$ en mètres.</p>
+    </div>
+
+    <div class="step-item">
+      <div class="step-title">2. Décroissance Radioactive & Activité :</div>
+      <p>La loi de décroissance du nombre de noyaux non désintégrés à l'instant $t$ :</p>
+      <div class="math-formula-box">$$N(t) = N_0 \\cdot e^{-\\lambda t}$$</div>
+      <p>Relation entre constante radioactive $\\lambda$ et demi-vie $t_{1/2}$ :</p>
+      <div class="math-formula-box">$$\\lambda = \\frac{\\ln(2)}{t_{1/2}} \\quad \\text{et} \\quad a(t) = -\\frac{dN(t)}{dt} = \\lambda \\cdot N(t)$$</div>
+    </div>
+  `,
+  cinetique: `
+    <div class="step-item">
+      <div class="step-title">1. Vitesse Volumique de Réaction :</div>
+      <p>Pour un système réactionnel de volume total $V_S$, la vitesse volumique $v(t)$ à l'instant $t$ est définie par :</p>
+      <div class="math-formula-box">$$v(t) = \\frac{1}{V_S} \\cdot \\frac{dx}{dt}$$</div>
+      <p>• $\\frac{dx}{dt}$ représente le coefficient directeur de la tangente à la courbe de l'avancement $x(t)$ à l'instant $t$ :</p>
+      <div class="math-formula-box">$$\\frac{dx}{dt} = \\frac{\\Delta x}{\\Delta t} = \\frac{x_B - x_A}{t_B - t_A}$$</div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-title">2. Temps de demi-réaction $t_{1/2}$ :</div>
+      <p>C'est la durée au bout de laquelle l'avancement atteint la moitié de sa valeur finale :</p>
+      <div class="math-formula-box">$$x(t_{1/2}) = \\frac{x_{\\text{max}}}{2}$$</div>
+    </div>
+  `
+};
+
+// DOM Auth
 const authModal = document.getElementById('auth-modal');
 const appContainer = document.getElementById('app-container');
 const btnRoleStudent = document.getElementById('btn-role-student');
 const btnRoleTeacher = document.getElementById('btn-role-teacher');
-
 const studentStep1Form = document.getElementById('student-step1-form');
 const studentStep2Form = document.getElementById('student-step2-form');
 const teacherForm = document.getElementById('teacher-form');
-
 const authAlert = document.getElementById('auth-alert');
 const displayTargetEmail = document.getElementById('display-target-email');
 const simulatedPinVal = document.getElementById('simulated-pin-val');
 const otpInput = document.getElementById('otp-input');
 const btnBackStep1 = document.getElementById('btn-back-step1');
 
-// Profil App
+// Profil
 const appUserBadge = document.getElementById('app-user-badge');
 const appUserAvatar = document.getElementById('app-user-avatar');
 const appUserName = document.getElementById('app-user-name');
@@ -35,7 +79,7 @@ const studentNav = document.getElementById('student-nav');
 const teacherNav = document.getElementById('teacher-nav');
 const btnLogout = document.getElementById('btn-logout');
 
-// 1. Basculement Rôles Auth
+// Rôles
 btnRoleStudent.addEventListener('click', () => {
   btnRoleStudent.classList.add('active');
   btnRoleTeacher.classList.remove('active');
@@ -54,19 +98,15 @@ btnRoleTeacher.addEventListener('click', () => {
   authAlert.textContent = '';
 });
 
-// 2. Étape 1 Élève : Génération du PIN OTP
+// Étape 1 Élève
 studentStep1Form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('stu-name').value.trim();
   const school = document.getElementById('stu-school').value.trim();
   const email = document.getElementById('stu-email').value.trim().toLowerCase();
-
-  // Génération de 4 chiffres aléatoires
   const generatedPin = Math.floor(1000 + Math.random() * 9000).toString();
 
   pendingStudent = { name, school, email, pin: generatedPin };
-
-  // Passage à l'étape 2 (Code PIN)
   displayTargetEmail.textContent = email;
   simulatedPinVal.textContent = generatedPin;
 
@@ -81,36 +121,29 @@ btnBackStep1.addEventListener('click', () => {
   studentStep1Form.classList.add('active');
 });
 
-// 3. Étape 2 Élève : Validation OTP
+// Étape 2 Élève
 studentStep2Form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const enteredPin = otpInput.value.trim();
-
-  if (enteredPin === pendingStudent.pin) {
-    // Sauvegarder dans la DB locale
+  if (otpInput.value.trim() === pendingStudent.pin) {
     const existingIndex = studentsDb.findIndex(s => s.email === pendingStudent.email);
-    if (existingIndex >= 0) {
-      studentsDb[existingIndex] = pendingStudent;
-    } else {
-      studentsDb.push(pendingStudent);
-    }
+    if (existingIndex >= 0) studentsDb[existingIndex] = pendingStudent;
+    else studentsDb.push(pendingStudent);
+    
     localStorage.setItem('bacvault_students', JSON.stringify(studentsDb));
 
-    // Session Active Élève
     sessionStorage.setItem('current_user', JSON.stringify({
       role: 'STUDENT',
       name: pendingStudent.name,
       school: pendingStudent.school,
       email: pendingStudent.email
     }));
-
     launchApp();
   } else {
-    authAlert.textContent = 'Code PIN incorrect. Veuillez réessayer.';
+    authAlert.textContent = 'Code PIN incorrect.';
   }
 });
 
-// 4. Authentification Enseignant
+// Prof
 teacherForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('tea-name').value.trim();
@@ -130,7 +163,6 @@ teacherForm.addEventListener('submit', (e) => {
   }
 });
 
-// 5. Lancement de l'Application
 function launchApp() {
   const sessionData = JSON.parse(sessionStorage.getItem('current_user'));
   if (!sessionData) return;
@@ -143,15 +175,9 @@ function launchApp() {
   appUserAvatar.textContent = sessionData.name.charAt(0).toUpperCase();
 
   if (sessionData.role === 'TEACHER') {
-    appUserBadge.textContent = 'Professeur / Admin';
-    appUserBadge.style.background = 'rgba(16, 185, 129, 0.15)';
-    appUserBadge.style.color = '#10b981';
-    appUserBadge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-
+    appUserBadge.textContent = 'Professeur';
     studentNav.classList.add('hidden');
     teacherNav.classList.remove('hidden');
-
-    // Activer l'onglet Enseignant
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-teacher-overview').classList.add('active');
     updateTeacherStats();
@@ -159,33 +185,30 @@ function launchApp() {
     appUserBadge.textContent = 'Élève Certifié';
     studentNav.classList.remove('hidden');
     teacherNav.classList.add('hidden');
-
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-vault').classList.add('active');
   }
 
-  renderCustomDocs();
+  // Rendu des formules initiales
+  renderMathInDoc();
 }
 
-// 6. Déconnexion
 btnLogout.addEventListener('click', () => {
   sessionStorage.removeItem('current_user');
   location.reload();
 });
 
-// 7. Navigation par Onglets
+// Navigation
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-
     btn.classList.add('active');
-    const targetId = btn.getAttribute('data-tab');
-    document.getElementById(targetId).classList.add('active');
+    document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
   });
 });
 
-// 8. Modal Lecteur de Fiche
+// Modal de Fiche avec KaTeX
 const docModal = document.getElementById('doc-modal');
 const docModalTitle = document.getElementById('doc-modal-title');
 const docModalBody = document.getElementById('doc-modal-body');
@@ -194,160 +217,82 @@ const docModalClose = document.getElementById('doc-modal-close');
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('btn-open-doc')) {
     const title = e.target.getAttribute('data-title');
-    const content = e.target.getAttribute('data-content');
+    const type = e.target.getAttribute('data-type');
 
     docModalTitle.textContent = title;
-    docModalBody.innerHTML = content;
+    docModalBody.innerHTML = DOCS_CONTENT[type] || '<p>Contenu en cours de rédaction.</p>';
     docModal.classList.remove('hidden');
+
+    // Rendu automatique de toutes les équations KaTeX dans la modale
+    if (window.renderMathInElement) {
+      renderMathInElement(docModalBody, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ]
+      });
+    }
   }
 });
 
-docModalClose.addEventListener('click', () => {
-  docModal.classList.add('hidden');
-});
+docModalClose.addEventListener('click', () => docModal.classList.add('hidden'));
 
-// 9. Filtrage des fiches
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const filter = btn.getAttribute('data-filter');
-    document.querySelectorAll('#student-vault-grid .doc-card').forEach(card => {
-      if (filter === 'all' || card.getAttribute('data-subject') === filter) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
+function renderMathInDoc() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ]
     });
-  });
-});
-
-// 10. Publication Enseignant
-const teacherPublishForm = document.getElementById('teacher-publish-form');
-if (teacherPublishForm) {
-  teacherPublishForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const subject = document.getElementById('pub-subject').value;
-    const title = document.getElementById('pub-title').value.trim();
-    const desc = document.getElementById('pub-desc').value.trim();
-    const content = document.getElementById('pub-content').value.trim();
-    const sessionData = JSON.parse(sessionStorage.getItem('current_user'));
-
-    const newDoc = {
-      subject,
-      title,
-      desc,
-      content,
-      author: sessionData ? sessionData.name : 'Pr. BacVault'
-    };
-
-    customDocsDb.unshift(newDoc);
-    localStorage.setItem('bacvault_custom_docs', JSON.stringify(customDocsDb));
-
-    teacherPublishForm.reset();
-    alert('Fiche publiée avec succès pour tous les élèves !');
-    updateTeacherStats();
-    renderCustomDocs();
-  });
+  }
 }
 
-function renderCustomDocs() {
-  const grid = document.getElementById('student-vault-grid');
-  // Supprimer les anciens custom docs ajoutés dynamiquement
-  document.querySelectorAll('.custom-doc-card').forEach(c => c.remove());
-
-  customDocsDb.forEach(doc => {
-    const badgeClass = doc.subject === 'Maths' ? 'badge-math' : doc.subject === 'Physique' ? 'badge-phys' : 'badge-chem';
-    const card = document.createElement('div');
-    card.className = 'doc-card custom-doc-card';
-    card.setAttribute('data-subject', doc.subject);
-    card.innerHTML = `
-      <div class="doc-badge ${badgeClass}">${doc.subject}</div>
-      <h3>${doc.title}</h3>
-      <p>${doc.desc}</p>
-      <div class="doc-footer">
-        <span class="author">Par : ${doc.author}</span>
-        <button class="btn-open-doc" data-title="${doc.title}" data-content="<p>${doc.content.replace(/\n/g, '<br>')}</p>">Lire la fiche</button>
-      </div>
-    `;
-    grid.prepend(card);
-  });
-}
-
-// 11. Mise à jour Stats & Tables Enseignant
 function updateTeacherStats() {
-  const statStudents = document.getElementById('stat-students-count');
-  const statDocs = document.getElementById('stat-docs-count');
-  const statQuestions = document.getElementById('stat-questions-count');
-  const studentsTbody = document.getElementById('teacher-students-tbody');
-  const modRecentList = document.getElementById('teacher-mod-list');
-
-  statStudents.textContent = studentsDb.length;
-  statDocs.textContent = 3 + customDocsDb.length;
-  statQuestions.textContent = solverQuestionsDb.length;
-
-  studentsTbody.innerHTML = '';
-  if (studentsDb.length === 0) {
-    studentsTbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748b;">Aucun élève enregistré pour le moment.</td></tr>`;
-  } else {
-    studentsDb.forEach(stu => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td><strong>${stu.name}</strong></td>
-        <td>${stu.school}</td>
-        <td>${stu.email}</td>
-        <td><code>${stu.pin}</code></td>
-        <td><span style="color:#10b981;">● Actif</span></td>
-      `;
-      studentsTbody.appendChild(row);
-    });
-  }
+  document.getElementById('stat-students-count').textContent = studentsDb.length;
+  const tbody = document.getElementById('teacher-students-tbody');
+  tbody.innerHTML = '';
+  studentsDb.forEach(stu => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="padding:14px;"><strong>${stu.name}</strong></td>
+      <td style="padding:14px;">${stu.school}</td>
+      <td style="padding:14px;">${stu.email}</td>
+      <td style="padding:14px;"><code>${stu.pin}</code></td>
+    `;
+    tbody.appendChild(row);
+  });
 }
 
-// 12. Chat Solver Élève
+// Solver Chat
 const studentSolverForm = document.getElementById('student-solver-form');
 const chatInput = document.getElementById('chat-input');
-const chatSubject = document.getElementById('chat-subject');
 const studentChatHistory = document.getElementById('student-chat-history');
 
 if (studentSolverForm) {
   studentSolverForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const query = chatInput.value.trim();
-    const subj = chatSubject.value;
-    if (!query) return;
+    const q = chatInput.value.trim();
+    if (!q) return;
 
-    // Bulle Utilisateur
-    const userBubble = document.createElement('div');
-    userBubble.className = 'bubble bubble-user';
-    userBubble.innerHTML = `<strong>Moi (${subj}) :</strong> ${query}`;
-    studentChatHistory.appendChild(userBubble);
-
-    // Enregistrer pour l'espace Prof
-    solverQuestionsDb.push({ subject: subj, query: query });
-    localStorage.setItem('bacvault_solver_questions', JSON.stringify(solverQuestionsDb));
-
+    const u = document.createElement('div');
+    u.style.cssText = "background:linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color:#06080e; font-weight:600; padding:10px 14px; border-radius:10px; align-self:flex-end;";
+    u.textContent = q;
+    studentChatHistory.appendChild(u);
     chatInput.value = '';
-    studentChatHistory.scrollTop = studentChatHistory.scrollHeight;
 
-    // Réponse Automatique Intelligente
     setTimeout(() => {
-      const aiBubble = document.createElement('div');
-      aiBubble.className = 'bubble bubble-ai';
-      aiBubble.innerHTML = `
-        <strong>Méthode Guidée (${subj}) :</strong><br>
-        1. <em>Hypothèses :</em> Vérifie et pose explicitement les conditions du domaine d'étude.<br>
-        2. <em>Théorème / Loi :</em> Cite précisément la formule ou le théorème sans omettre la rédaction type attendue au barème.<br>
-        3. <em>Vérification :</em> Contrôle la cohérence des bornes et des unités de mesure.
-      `;
-      studentChatHistory.appendChild(aiBubble);
+      const a = document.createElement('div');
+      a.style.cssText = "background:rgba(255,255,255,0.05); border-left:4px solid var(--accent-cyan); padding:12px 14px; border-radius:10px; font-size:0.9rem;";
+      a.innerHTML = `<strong>Méthode Recommandée :</strong><br>1. Poser le domaine d'étude $D_f$.<br>2. Appliquer le théorème avec justification stricte.<br>3. Contrôler les bornes et unités.`;
+      studentChatHistory.appendChild(a);
       studentChatHistory.scrollTop = studentChatHistory.scrollHeight;
-    }, 450);
+      renderMathInDoc();
+    }, 400);
   });
 }
 
-// Vérifier si une session est déjà active
+// Vérifier session active
 if (sessionStorage.getItem('current_user')) {
   launchApp();
 }
